@@ -5,12 +5,19 @@
 
 #include<iostream>
 #include<vector>
+#include<queue>
+using namespace std;
 struct ListNode {
      int val;
      ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
  };
 #if 0
+/*
+渐进时间复杂度为 O(k^2 n)O(k 2 n)
+
+空间复杂度：没有用到与 kk 和 nn 规模相关的辅助空间，故渐进空间复杂度为 O(1)O(1)。
+*/
 class Solution{
 public:
    ListNode* mergeTwoLists(ListNode*l1,ListNode*l2)
@@ -101,3 +108,30 @@ public:
     }
 
 };
+/*
+class Solution {
+public:
+    // 小根堆的回调函数
+    struct cmp{  
+       bool operator()(ListNode *a,ListNode *b){
+          return a->val > b->val;
+       };
+    };
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, cmp> pri_queue;
+        // 建立大小为k的小根堆
+        for(auto elem : lists){
+            if(elem) pri_queue.push(elem);
+        }
+        // 可以使用哑节点/哨兵节点
+        ListNode dummy(-1);
+        ListNode* p = &dummy;
+        // 开始出队
+        while(!pri_queue.empty()){
+            ListNode* top = pri_queue.top(); pri_queue.pop();
+            p->next = top; p = top;
+            if(top->next) pri_queue.push(top->next);
+        }
+        return dummy.next;  
+    }
+};*/

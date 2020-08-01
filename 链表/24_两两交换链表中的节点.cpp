@@ -29,7 +29,7 @@ class Solution
 
         p1=head->next;
         p2=p1->next;
-        while(p2!=nullptr||p2->next!=nullptr)
+        while(p2!=nullptr&&p2->next!=nullptr)
         {
             //通过自己画图总结出每次交换的规律
             ListNode *temp = p1;
