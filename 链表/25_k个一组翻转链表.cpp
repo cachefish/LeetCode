@@ -53,7 +53,10 @@ public:
             pPrev->next = reverseList(pTemp,pCurr);//进行翻转
             pPrev=pTemp;//重新指向
         }
-        return dummy->next;
+        ListNode*ret = dummy->next;
+        delete dummy;
+        dummy=nullptr;
+        return ret;
     }
 };
 

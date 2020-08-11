@@ -13,10 +13,10 @@ public:
         int y =0;
         while(x){
             if(y>INT_MAX||y<INT_MIN){
-                return;
+                return 0;
             }
             y*=10;
-            x+=x%10;
+            y+=x%10;
             x/10;
         }
         return y;

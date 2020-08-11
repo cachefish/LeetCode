@@ -71,3 +71,53 @@ public:
         }
     }
 };
+
+
+class Solution {
+public:
+    double middle(vector<int> &nums){
+        int n = nums.size();
+        if (n == 0) return 0;
+        if (n & 1) return nums[n/2];
+        return (nums[n/2-1]+nums[n/2])/2.0;
+    }
+
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        if(nums1.empty()) return middle(nums2);
+        if(nums2.empty()) return middle(nums1);
+        if(nums1.size() > nums2.size()){ // 保证nums1.size() <= nums2.size()
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int m = nums1.size(), n = nums2.size();
+        int slice_left = 0, slice_right = m;
+        int k = (m+n+1)/2;
+        while(slice_left < slice_right){
+            int slice_1 = slice_left + (slice_right-slice_left)/2;
+            int slice_2 = k-slice_1;
+            if(slice_2 <= 0) break;
+            if(nums1[slice_1] < nums2[slice_2-1]) slice_left = slice_1+1;
+            else slice_right = slice_1;
+        }
+        int slice_1 = slice_left, slice_2 = k - slice_1;
+        // cout << slice_1 << " " << slice_2 << endl;
+        int leftMax, rightMin;
+        if(slice_1 == 0){
+            leftMax = nums2[slice_2-1];
+        }else if(slice_2 == 0){
+            leftMax = nums1[slice_1-1];
+        }else{
+            leftMax = max(nums1[slice_1-1], nums2[slice_2-1]);
+        }
+        if(slice_1 == m){
+            rightMin = nums2[slice_2];
+        }else if(slice_2 == n){
+            rightMin = nums1[slice_1];
+        }else{
+            rightMin = min(nums1[slice_1], nums2[slice_2]);
+        }
+
+        double ans = ((m+n)&1)?leftMax:((leftMax+rightMin)/2.0);
+        return ans;
+    }
+};
+

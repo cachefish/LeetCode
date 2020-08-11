@@ -41,7 +41,7 @@ public:
                     match = '(';
                 }else if(s[i]=='}')
                 {
-                    match = '}';
+                    match = '{';
                 }else if(s[i]==']')
                 {
                     match = '[';
@@ -51,12 +51,9 @@ public:
                     return false;
                 }
             }
-            if(st.size()!=0)   //栈中还有剩余左括号，说明多余
-            {
-                return false;
-            }
-            return true;
         }
-
+        if(st.size()!=0)
+            return false;
+        return true;
     }
 };
